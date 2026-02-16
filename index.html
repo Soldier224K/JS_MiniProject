@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Form Validator - JS Mini project</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 40px;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 15px 35px rgba(255, 0, 0, 0.15);
+            border-left: 8px solid #ff0000;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000;
+            display: inline-block;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 0;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #ff0000;
+        }
+
+        .error {
+            color: #ff0000;
+            font-size: 11px;
+            font-weight: 700;
+            display: block;
+            height: 15px;
+            margin-top: 4px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Register</h2>
+    <form id="regForm" onsubmit="return validateForm()">
+        <div class="input-group">
+            <label>Name</label>
+            <input type="text" id="name">
+            <span id="nameError" class="error"></span>
+        </div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="text" id="email">
+            <span id="emailError" class="error"></span>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password">
+            <span id="passwordError" class="error"></span>
+        </div>
+
+        <div class="input-group">
+            <label>Mobile</label>
+            <input type="text" id="mobile">
+            <span id="mobileError" class="error"></span>
+        </div>
+
+        <button type="submit" class="submit-btn">Create Account</button>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        document.getElementById("nameError").innerHTML = "";
+        document.getElementById("emailError").innerHTML = "";
+        document.getElementById("passwordError").innerHTML = "";
+        document.getElementById("mobileError").innerHTML = "";
+
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var mobile = document.getElementById("mobile").value;
+        
+        var isValid = true;
+
+        if (name == "") {
+            document.getElementById("nameError").innerHTML = "Field required";
+            isValid = false;
+        } else {
+            var letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+            for (var i = 0; i < name.length; i++) {
+                if (!letters.includes(name[i])) {
+                    document.getElementById("nameError").innerHTML = "Only characters allowed";
+                    isValid = false;
+                    break;
+                }
+            }
+        }
+
+        if (!email.includes("@") || !email.includes(".")) {
+            document.getElementById("emailError").innerHTML = "Invalid (Missing @ or .)";
+            isValid = false;
+        }
+
+        if (password.length < 8) {
+            document.getElementById("passwordError").innerHTML = "Min 8 characters";
+            isValid = false;
+        }
+
+       var digits = "0123456789";
+        if (mobile.length != 10) {
+            document.getElementById("mobileError").innerHTML = "Must be 10 digits";
+            isValid = false;
+        } else {
+            for (var j = 0; j < mobile.length; j++) {
+                if (!digits.includes(mobile[j])) {
+                    document.getElementById("mobileError").innerHTML = "Only numbers allowed";
+                    isValid = false;
+                    break;
+                }
+            }
+        }
+
+        if (isValid) {
+            alert("Welcome to our team, " + name + "!");
+        }
+
+        return isValid;
+    }
+</script>
+
+</body>
+</html>
